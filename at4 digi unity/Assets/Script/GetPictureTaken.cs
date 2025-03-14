@@ -7,6 +7,12 @@ public class GetPictureTaken : MonoBehaviour
 
     void Start()
     {
-        image.sprite = CamScript.camScript.imageSource;   
+        RectTransform rect = image.GetComponent<RectTransform>();
+
+        float targetWidth = rect.sizeDelta.x;
+        float targetHeight = targetWidth / KeepOnScenes.keepOnScenes.aspectRatio;
+
+        rect.sizeDelta = new Vector2(targetWidth, targetHeight);
+        image.sprite = KeepOnScenes.keepOnScenes.imageSource;
     }
 }

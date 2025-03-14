@@ -47,6 +47,8 @@ public class CamScript : MonoBehaviour
             float targetWidth = rect.sizeDelta.x;
             float targetHeight = targetWidth / aspectRatio;
 
+            KeepOnScenes.keepOnScenes.aspectRatio = aspectRatio;
+
             rect.sizeDelta = new Vector2(targetWidth, targetHeight);
         }
         else
@@ -70,6 +72,8 @@ public class CamScript : MonoBehaviour
             byte[] photoBytes = photo.EncodeToPNG();
             //image.sprite = sprite;
             imageSource = sprite;
+
+            KeepOnScenes.keepOnScenes.imageSource = imageSource;
 
             /*
             // Save the PNG to the desktop
