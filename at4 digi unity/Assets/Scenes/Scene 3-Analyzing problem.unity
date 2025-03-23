@@ -362,7 +362,7 @@ GameObject:
   - component: {fileID: 853642343}
   - component: {fileID: 853642342}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: ConfirmPic Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -441,7 +441,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Scene 2-Camera
+          m_StringArgument: Scene 4-OCR
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &853642343
@@ -675,7 +675,7 @@ GameObject:
   - component: {fileID: 1451338716}
   - component: {fileID: 1451338715}
   m_Layer: 5
-  m_Name: Button
+  m_Name: RetakePic Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
