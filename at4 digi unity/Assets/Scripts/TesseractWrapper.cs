@@ -191,11 +191,13 @@ public class TesseractWrapper
         if (stringPtr.Equals(IntPtr.Zero))
             return null;
 
-#if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
-        string recognizedText = Marshal.PtrToStringAnsi (stringPtr);
-#else
-        string recognizedText = Marshal.PtrToStringAuto(stringPtr);
-#endif
+        #if UNITY_EDITOR_WIN || UNITY_STANDALONE_WIN
+                string recognizedText = Marshal.PtrToStringAnsi(stringPtr);
+        #else
+                string recognizedText = Marshal.PtrToStringAuto(stringPtr);
+        #endif
+
+        Debug.Log(recognizedText);
 
         TessBaseAPIClear(_tessHandle);
         TessDeleteText(stringPtr);
