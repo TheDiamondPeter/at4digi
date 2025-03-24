@@ -24,17 +24,6 @@ public class TesseractOCR_Detection : MonoBehaviour
             confirmButton.onClick.AddListener(OnConfirmText);
         else
             Debug.LogError("❌ Confirm button not assigned in Inspector!");
-
-        // Test: Ensure the InputField is active
-        if (ocrTextField != null)
-        {
-            ocrTextField.text = "TEST MESSAGE";  // Check if UI updates
-            Debug.Log("✅ InputField test text assigned.");
-        }
-        else
-        {
-            Debug.LogError("❌ ocrTextField is NULL! Assign it in the Inspector.");
-        }
     }
 
     public void DetectText()
@@ -46,9 +35,12 @@ public class TesseractOCR_Detection : MonoBehaviour
             Debug.LogError("❌ No image found in KeepOnScenes!");
             return;
         }
-
+        Debug.Log("✅ Found Image in KeepOnScenes! Assigning now...");
+        imageDisplay.sprite = KeepOnScenes.keepOnScenes.imageSource;
+        
         // Assign and display the uploaded image
         Sprite sprite = KeepOnScenes.keepOnScenes.imageSource;
+        Debug.Log("📌 Image assigned: " + sprite);
         imageDisplay.sprite = sprite;
         Debug.Log("✅ Image assigned successfully!");
 
@@ -56,16 +48,26 @@ public class TesseractOCR_Detection : MonoBehaviour
         processedTexture = ConvertSpriteToTexture(sprite);
         processedTexture = ConvertToBlackAndWhite(processedTexture); // Preprocessing for better OCR
 
-        if (processedTexture == null)
+        if (processedTexture != null)
         {
-            Debug.LogError("❌ Failed to convert sprite to texture!");
-            return;
+            imageDisplay.sprite = Sprite.Create(
+                processedTexture,
+                new Rect(0, 0, processedTexture.width, processedTexture.height),
+                new Vector2(0.5f, 0.5f)  // Center pivot
+            );
+            Debug.Log("✅ Image displayed successfully!");
         }
+        else
+        {
+            Debug.LogError("❌ Processed texture is NULL! Check the conversion process.");
+        }
+
 
         // Save the image for debugging
         byte[] bytes = processedTexture.EncodeToPNG();
-        System.IO.File.WriteAllBytes(Application.persistentDataPath + "/debug_image.png", bytes);
-        Debug.Log("📂 Saved image at: " + Application.persistentDataPath + "/debug_image.png");
+        string path = Application.persistentDataPath + "/debug_image.png";
+        System.IO.File.WriteAllBytes(path, bytes);
+        Debug.Log("📂 Saved image at: " + path);
 
         // Perform OCR
         Debug.Log("🔍 OCR is analyzing texture...");
@@ -94,6 +96,9 @@ public class TesseractOCR_Detection : MonoBehaviour
         // Force UI update
         ocrTextField.ForceLabelUpdate();
         ocrTextField.onValueChanged.Invoke(ocrTextField.text);
+
+        // Enable Confirm button
+        confirmButton.interactable = true;
     }
 
     public void OnConfirmText()
@@ -121,6 +126,13 @@ public class TesseractOCR_Detection : MonoBehaviour
 
     private Texture2D ConvertSpriteToTexture(Sprite sprite)
     {
+        if (!imageDisplay.gameObject.activeInHierarchy)
+        {
+            Debug.LogWarning("⚠️ Image UI is inactive! Enabling now...");
+            imageDisplay.gameObject.SetActive(true);
+        }
+
+
         if (sprite == null)
         {
             Debug.LogError("❌ Sprite is NULL in ConvertSpriteToTexture!");
@@ -147,23 +159,37 @@ public class TesseractOCR_Detection : MonoBehaviour
         {
             Debug.Log("✅ Texture converted successfully.");
         }
-
         return texture;
     }
 
-    private Texture2D ConvertToBlackAndWhite(Texture2D original)
+    private Texture2D ConvertToBlackAndWhite(Texture2D texture)
     {
-        Texture2D bwTexture = new Texture2D(original.width, original.height);
-        Color[] pixels = original.GetPixels();
-
-        for (int i = 0; i < pixels.Length; i++)
+        if (texture == null)
         {
-            float grayscale = pixels[i].grayscale > 0.5f ? 1f : 0f;
-            pixels[i] = new Color(grayscale, grayscale, grayscale);
+            Debug.LogError("❌ Texture is NULL in ConvertToBlackAndWhite!");
+            return null;
         }
 
-        bwTexture.SetPixels(pixels);
-        bwTexture.Apply();
-        return bwTexture;
+        Debug.Log("✅ Converting Texture to Black & White...");
+
+        Color[] pixels = texture.GetPixels();
+        for (int i = 0; i < pixels.Length; i++)
+        {
+            float gray = pixels[i].r * 0.299f + pixels[i].g * 0.587f + pixels[i].b * 0.114f;
+            pixels[i] = new Color(gray, gray, gray, pixels[i].a);
+        }
+
+        texture.SetPixels(pixels);
+        texture.Apply();
+
+        if (texture == null)
+        {
+            Debug.LogError("❌ Conversion failed! Texture is NULL.");
+        }
+        else
+        {
+            Debug.Log("✅ Texture converted successfully.");
+        }
+        return texture;
     }
 }
