@@ -25,4 +25,8 @@ public class TesseractOCR_Detection : MonoBehaviour
 
         Debug.Log(recognizedText);
     }
+
+    void Start(){
+        DetectText();
+    }
 }

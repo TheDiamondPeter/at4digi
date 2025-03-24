@@ -22,7 +22,7 @@ public class LoginManager : MonoBehaviour
         if (usernameField.text == correctUsername && passwordField.text == correctPassword)
         {
             // Load the main menu scene with build index 2
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(1);
         }
         else
         {

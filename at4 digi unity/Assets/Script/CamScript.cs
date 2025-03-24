@@ -47,9 +47,9 @@ public class CamScript : MonoBehaviour
             float targetWidth = rect.sizeDelta.x;
             float targetHeight = targetWidth / aspectRatio;
 
-            KeepOnScenes.keepOnScenes.aspectRatio = aspectRatio;
-
             rect.sizeDelta = new Vector2(targetWidth, targetHeight);
+
+            KeepOnScenes.keepOnScenes.aspectRatio = aspectRatio;
         }
         else
         {
