@@ -101,6 +101,7 @@ public class TesseractOCR_Detection : MonoBehaviour
 
         // Enable Confirm button
         confirmButton.interactable = true;
+        DetectText();
     }
 
     public void OnConfirmText()
