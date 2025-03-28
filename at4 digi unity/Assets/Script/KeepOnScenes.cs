@@ -2,13 +2,20 @@ using UnityEngine;
 
 public class KeepOnScenes : MonoBehaviour
 {
-    public static KeepOnScenes keepOnScenes;
-    public Sprite imageSource;
-    public float aspectRatio = 0;
+    public static KeepOnScenes keepOnScenes; // Singleton reference
+    public Sprite imageSource; // Holds the captured image
+    public float aspectRatio;  // Stores the image's aspect ratio
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        DontDestroyOnLoad(this.gameObject);   
+        if (keepOnScenes == null)
+        {
+            keepOnScenes = this;  // Initialize the singleton
+            DontDestroyOnLoad(gameObject); // Keep it across scenes
+        }
+        else
+        {
+            Destroy(gameObject);  // Prevent duplicates
+        }
     }
 }
