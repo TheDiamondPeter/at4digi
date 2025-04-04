@@ -173,7 +173,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      TakePhoto Button_0: 1262833397044169664
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
