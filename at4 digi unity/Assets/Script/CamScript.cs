@@ -69,6 +69,7 @@ public class CamScript : MonoBehaviour
             photo.Apply();
 
             Sprite sprite = Sprite.Create(photo, new Rect(0, 0, photo.width, photo.height), new Vector2(0.5f, 0.5f));
+            
             imageSource = sprite;
             KeepOnScenes.keepOnScenes.imageSource = imageSource;
             Debug.Log("[CamScript] Photo captured successfully.");
