@@ -24,6 +24,8 @@ public class TesseractOCR_Detection : MonoBehaviour
             confirmButton.onClick.AddListener(OnConfirmText);
         else
             Debug.LogError("❌ Confirm button not assigned in Inspector!");
+
+        DetectText();
     }
 
     public void DetectText()
@@ -99,7 +101,7 @@ public class TesseractOCR_Detection : MonoBehaviour
 
         // Enable Confirm button
         confirmButton.interactable = true;
-        DetectText();
+        //DetectText();
     }
 
     public void updateOCR_TextField(string newText) {
