@@ -28,7 +28,7 @@ public class GetPictureTaken : MonoBehaviour
             return; // Prevent setting a null sprite
         }
 
-        // ✅ Resize the image based on aspect ratio
+        // Resize the image based on aspect ratio
         RectTransform rect = image.GetComponent<RectTransform>();
 
         float targetWidth = rect.sizeDelta.x;
